@@ -1,0 +1,13 @@
+%{
+#include "hpp.hpp"
+%}
+%defines %union { Sym*o; }
+%token <o> SYM
+%token <o> LQ RQ
+%type <o> ex vector
+%%
+REPL :| REPL ex { cout << $2->dump() << endl; }
+ex : SYM
+ex : LQ vector RQ	{ $$=$2; }
+vector :			{ $$=new Vector(); }
+vector : vector ex	{ $$=$1->push($2); }

@@ -1,0 +1,11 @@
+%{
+#include "hpp.hpp"
+%}
+%option noyywrap yylineno
+%%
+#.*				{}
+[ \t\r\n]+		{}
+\[				TOC(Op,LQ)
+\]				TOC(Op,RQ)
+[a-zA-Z0-9_]+	TOC(Sym,SYM)
+.				{yyerror("lexer");}
